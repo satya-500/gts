@@ -666,8 +666,8 @@ installtaskqueue()
 
     echo "Upgrading appscale-common.."
     "${TASKQUEUE_PIP}" install --upgrade --no-deps "${COMMON_DIR}"
-    echo "Installing appscale-common dependencies if any missing.."
-    "${TASKQUEUE_PIP}" install "${COMMON_DIR}"
+    # echo "Installing appscale-common dependencies if any missing.."
+    # "${TASKQUEUE_PIP}" install "${COMMON_DIR}"
     echo "Upgrading appscale-taskqueue.."
     "${TASKQUEUE_PIP}" install --upgrade --no-deps "${TQ_DIR}[celery_gui]"
     echo "Installing appscale-taskqueue dependencies if any missing.."
