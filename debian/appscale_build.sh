@@ -41,10 +41,10 @@ apt install -y build-essential zlib1g-dev
 # else
 #     echo "rbenv is already installed."
 # fi
-rbenv install 2.5.1
-rbenv global 2.5.1
-rbenv rehash
-echo "done."
+# rbenv install 2.5.1
+# rbenv global 2.5.1
+# rbenv rehash
+# echo "done."
 
 # Get the release version and vendor.
 export DIST="$(lsb_release -c -s)"
