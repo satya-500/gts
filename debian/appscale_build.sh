@@ -30,17 +30,21 @@ fi
 # install ruby 
 
 apt install -y build-essential zlib1g-dev
-if ! which rbenv > /dev/null ; then
-    echo -n "Installing rbenv and ruby-build..."
-    curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
-    source ~/.bashrc
-    rbenv install 2.5.1
-    rbenv global 2.5.1
-    rbenv rehash
-    echo "done."
-else
-    echo "rbenv is already installed."
-fi
+# if ! which rbenv > /dev/null ; then
+#     echo -n "Installing rbenv and ruby-build..."
+#     curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
+#     source ~/.bashrc
+#     rbenv install 2.5.1
+#     rbenv global 2.5.1
+#     rbenv rehash
+#     echo "done."
+# else
+#     echo "rbenv is already installed."
+# fi
+rbenv install 2.5.1
+rbenv global 2.5.1
+rbenv rehash
+echo "done."
 
 # Get the release version and vendor.
 export DIST="$(lsb_release -c -s)"

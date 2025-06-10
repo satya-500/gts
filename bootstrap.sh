@@ -7,8 +7,8 @@ set -e
 
 # Defaults values for repositories and branches.
 APPSCALE_REPO="https://github.com/satya-500/gts.git"
-APPSCALE_TOOLS_REPO="git://github.com/AppScale/appscale-tools.git"
-AGENTS_REPO="git://github.com/AppScale/appscale-agents.git"
+APPSCALE_TOOLS_REPO="https://github.com/AppScale/appscale-tools.git"
+AGENTS_REPO="https://github.com/AppScale/appscale-agents.git"
 APPSCALE_BRANCH="master"
 APPSCALE_TOOLS_BRANCH="master"
 AGENTS_BRANCH="master"
@@ -197,10 +197,6 @@ if [ ! -d appscale ]; then
 
     # Use tags if we specified it.
     if [ -n "$GIT_TAG"  ] && [  "${APPSCALE_BRANCH}" = "master" ]; then
-        if [ "$GIT_TAG" = "last" ]; then
-            GIT_TAG="$(cd appscale; git tag | tail -n 1)"
-        fi
-        (cd appscale; git checkout "$GIT_TAG")
         (cd appscale-tools; git checkout "$GIT_TAG")
         (cd appscale-agents; git checkout "$GIT_TAG")
     fi
@@ -235,7 +231,6 @@ if [ -d /etc/appscale/certs ]; then
     # This is an upgrade, so let's make sure we use a tag that has
     # been passed, or the last one available. Let's fetch all the
     # available tags first.
-    (cd appscale; git fetch ${APPSCALE_REPO} -t)
     (cd appscale-tools; git fetch ${APPSCALE_TOOLS_REPO} -t)
     (cd appscale-agents; git fetch ${AGENTS_REPO} -t)
 
@@ -248,17 +243,7 @@ if [ -d /etc/appscale/certs ]; then
         fi
     fi
 
-    # We can pull a tag only if we are on the master branch.
-    CURRENT_BRANCH="$(cd appscale; git branch --no-color | grep '^*' | cut -f 2 -d ' ')"
-    if [ "${CURRENT_BRANCH}" != "master" ] && \
-            (cd appscale; git tag -l | grep $(git describe)) ; then
-        CURRENT_BRANCH="$(cd appscale; git tag -l | grep $(git describe))"
-        if [ "${CURRENT_BRANCH}" = "${GIT_TAG}" ]; then
-            echo "AppScale repository is already at the"\
-                 "specified release. Building with current code."
-            UPDATE_REPO="N"
-        fi
-    fi
+    
 
     # If CURRENT_BRANCH is empty, then we are not on master, and we
     # are not on a released version: we don't upgrade then.
