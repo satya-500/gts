@@ -634,6 +634,8 @@ installcommon()
 
 installadminserver()
 {
+    pip install pyrsistent==0.15.4
+    pip install jsonschema==3.1.1
     pip install --no-deps ${APPSCALE_HOME}/AdminServer
     pip install ${APPSCALE_HOME}/AdminServer
 }
