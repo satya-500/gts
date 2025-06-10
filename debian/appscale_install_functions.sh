@@ -555,6 +555,7 @@ postinstallejabberd()
 installapiclient()
 {
     # The InfrastructureManager requires the Google API client.
+    pipwrapper "rsa==4.0"
     pipwrapper "google-api-python-client==1.5.4"
 }
 

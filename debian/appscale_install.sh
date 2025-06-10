@@ -32,32 +32,32 @@ case "$1" in
         # Scratch install of appscale including post script.
         installappscaleprofile
         . /etc/profile.d/appscale.sh
-        installgems
-        postinstallhaproxy
-        postinstallnginx
-        installjavajdk
-        installappserverjava
-        installtornado
-        installpycrypto
-        installpycapnp
-        installpymemcache
-        installpyyaml
-        installsoappy
-        installzookeeper
-        postinstallzookeeper
-        installcassandra
-        postinstallcassandra
-        postinstallrabbitmq
-        installsolr
-        installsolr7
-        installservice
-        postinstallservice
-        postinstallmonit
-        postinstallejabberd
-        setulimits
-        increaseconnections
-        installVersion
-        postinstallrsyslog
+        # installgems
+        # postinstallhaproxy
+        # postinstallnginx
+        # installjavajdk
+        # installappserverjava
+        # installtornado
+        # installpycrypto
+        # installpycapnp
+        # installpymemcache
+        # installpyyaml
+        # installsoappy
+        # installzookeeper
+        # postinstallzookeeper
+        # installcassandra
+        # postinstallcassandra
+        # postinstallrabbitmq
+        # installsolr
+        # installsolr7
+        # installservice
+        # postinstallservice
+        # postinstallmonit
+        # postinstallejabberd
+        # setulimits
+        # increaseconnections
+        # installVersion
+        # postinstallrsyslog
         installapiclient
         installgosdk
         installacc
