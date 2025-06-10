@@ -187,7 +187,6 @@ if [ ! -d appscale ]; then
     # We split the commands, to ensure it fails if branch doesn't
     # exists (Precise git will not fail otherwise).
     git clone ${APPSCALE_REPO} appscale
-    (cd appscale; git checkout ${APPSCALE_BRANCH})
 
     git clone ${APPSCALE_TOOLS_REPO} appscale-tools
     (cd appscale-tools; git checkout ${APPSCALE_TOOLS_BRANCH})
