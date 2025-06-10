@@ -665,7 +665,7 @@ installtaskqueue()
     COMMON_DIR="${APPSCALE_HOME}/common"
 
     echo "Upgrading appscale-common.."
-    "${TASKQUEUE_PIP}" install --upgrade --no-deps "${COMMON_DIR}"
+    "${TASKQUEUE_PIP}" install --no-deps "${COMMON_DIR}"
     # echo "Installing appscale-common dependencies if any missing.."
     # "${TASKQUEUE_PIP}" install "${COMMON_DIR}"
     echo "Upgrading appscale-taskqueue.."
