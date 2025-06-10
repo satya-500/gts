@@ -628,6 +628,7 @@ installacc()
 
 installcommon()
 {
+    /opt/appscale_venvs/search2/bin/pip install "PyYAML<6.0"
     pip install --no-deps ${APPSCALE_HOME}/common
     pip install ${APPSCALE_HOME}/common
 }
