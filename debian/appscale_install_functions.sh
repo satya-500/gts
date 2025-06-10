@@ -622,31 +622,31 @@ preplogserver()
 
 installacc()
 {
-    pip install --upgrade --no-deps ${APPSCALE_HOME}/AppControllerClient
+    pip install --no-deps ${APPSCALE_HOME}/AppControllerClient
     pip install ${APPSCALE_HOME}/AppControllerClient
 }
 
 installcommon()
 {
-    pip install --upgrade --no-deps ${APPSCALE_HOME}/common
+    pip install --no-deps ${APPSCALE_HOME}/common
     pip install ${APPSCALE_HOME}/common
 }
 
 installadminserver()
 {
-    pip install --upgrade --no-deps ${APPSCALE_HOME}/AdminServer
+    pip install --no-deps ${APPSCALE_HOME}/AdminServer
     pip install ${APPSCALE_HOME}/AdminServer
 }
 
 installhermes()
 {
-    pip install --upgrade --no-deps ${APPSCALE_HOME}/Hermes
+    pip install --no-deps ${APPSCALE_HOME}/Hermes
     pip install ${APPSCALE_HOME}/Hermes
 }
 
 installinfrastructuremanager()
 {
-    pip install --upgrade --no-deps ${APPSCALE_HOME}/InfrastructureManager
+    pip install --no-deps ${APPSCALE_HOME}/InfrastructureManager
     pip install ${APPSCALE_HOME}/InfrastructureManager
 }
 
