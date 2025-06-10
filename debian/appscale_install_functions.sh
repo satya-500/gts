@@ -41,7 +41,7 @@ pipwrapper ()
     # wrapper ensure that we are a bit more persitent.
     if [ -n "$1" ] ; then
         for x in {1..5} ; do
-            if pip install --upgrade $1 ; then
+            if pip install $1 ; then
                 return
             else
                 echo "Failed to install $1: retrying ..."
