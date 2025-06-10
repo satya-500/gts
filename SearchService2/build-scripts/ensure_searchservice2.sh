@@ -25,11 +25,11 @@ if ! "${PIP}" --version | grep 'python 3\.' ; then
 fi
 
 echo "Upgrading appscale-common.."
-"${PIP}" install --upgrade --no-deps "${COMMON_DIR}"
+"${PIP}" install --no-deps "${COMMON_DIR}"
 echo "Installing appscale-common dependencies if any missing.."
 "${PIP}" install "${COMMON_DIR}"
 echo "Upgrading appscale-search2.."
-"${PIP}" install --upgrade --no-deps "${SEARCH_DIR}"
+"${PIP}" install --no-deps "${SEARCH_DIR}"
 echo "Installing appscale-search2 dependencies if any missing.."
 "${PIP}" install "${SEARCH_DIR}"
 
