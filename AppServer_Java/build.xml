@@ -1,0 +1,157 @@
+<!-- create repacked package from source -->
+<project name="AppServer_Java" default="install">
+  <property name="src" location="src" />
+  <property name="build" location="build" />
+  <property name="gae_version" value="1.8.4" />
+  <property name="gae_org" location="appengine-java-sdk-${gae_version}" />
+  <property name="gae_dist" location="appengine-java-sdk-repacked" />
+  <property name="java_source_version" value="1.7" />
+  <property name="java_target_version" value="${java_source_version}" />
+
+  <path id="gae.classpath">
+    <fileset dir="${gae_dist}/lib">
+      <include name="**/*.jar" />
+      <exclude name="user/**/*.jar" />
+      <exclude name="tools/orm/*.jar" />
+      <exclude name="opt/**/*.jar" />
+    </fileset>
+  </path>
+
+  <target name="clean-all">
+    <delete dir="${build}" />
+    <delete dir="${gae_org}" />
+    <delete dir="${gae_dist}" />
+    <delete file="*.zip" />
+  </target>
+
+  <target name="clean-build">
+    <delete dir="${build}" />
+    <delete dir="${gae_org}" />
+  </target>
+
+  <target name="repack-sdk">
+    <mkdir dir="${gae_dist}" />
+    <copy todir="${gae_dist}" overwrite="true">
+      <fileset dir="${gae_org}">
+      <include name="**/*" />
+      <exclude name="demos/**" />
+      <exclude name="docs/**" />
+      <exclude name="src/**" />
+      </fileset>
+    </copy>
+    <copy todir="${gae_dist}/lib/impl">
+      <fileset dir="lib">
+        <include name="*.jar" />
+      </fileset>
+    </copy>
+    <chmod perm="a+x" verbose="true">
+      <fileset dir="${gae_dist}/bin">
+        <include name="*.sh" />
+      </fileset>
+    </chmod>
+  </target>
+
+  <target name="compile" depends="repack-sdk">
+    <mkdir dir="${build}" />
+    <javac srcdir="${src}" destdir="${build}" source="${java_source_version}" target="${java_target_version}"
+           encoding="utf-8" debug="true" includeantruntime="false">
+      <classpath refid="gae.classpath" />
+      <include name="com/google/appengine/api/**" />
+      <include name="com/google/appengine/tools/**" />
+      <include name="com/google/apphosting/utils/config/**" />
+      <include name="apphosting/tools/**" />
+    </javac>
+    <copy file="src/apphosting/tools/dev-channel-js.js" todir="${build}/apphosting/tools/"/>
+    <copy file="src/com/google/appengine/tools/development/webdefault.xml"
+          todir="${build}/com/google/appengine/tools/development/"/>
+  </target>
+
+  <target name="update-api-jar" depends="compile, repack-sdk, update-api-jar-user">
+    <jar destfile="${gae_dist}/lib/impl/appengine-api.jar" basedir="${build}" update="true">
+      <include name="com/google/appengine/api/blobstore/BlobstoreServiceImpl.class" />
+      <include name="com/google/appengine/api/blobstore/BlobInfoFactory.class" />
+      <include name="com/google/appengine/api/xmpp/InboundMessageParser.class" />
+      <include name="com/google/appengine/api/datastore/DatastoreAttributes.class" />
+    </jar>
+    <unzip src="${gae_dist}/lib/impl/appengine-api.jar" dest="${gae_dist}/lib/impl/tmp"/>
+    <delete dir="${gae_dist}/lib/impl/tmp/javax/mail"/>
+    <delete dir="${gae_dist}/lib/impl/tmp/javax/activation"/>
+    <jar destfile="${gae_dist}/lib/impl/appengine-api.jar" basedir="${gae_dist}/lib/impl/tmp" includes="**/*"/>
+    <delete dir="${gae_dist}/lib/impl/tmp"/>
+  </target>
+
+  <target name="update-api-jar-user" depends="compile, repack-sdk">
+    <jar destfile="${gae_dist}/lib/user/appengine-api-1.0-sdk-${gae_version}.jar" basedir="${build}" update="true">
+      <include name="com/google/appengine/api/blobstore/BlobstoreServiceImpl.class" />
+      <include name="com/google/appengine/api/blobstore/BlobInfoFactory.class" />
+      <include name="com/google/appengine/api/xmpp/InboundMessageParser.class" />
+      <include name="com/google/appengine/api/datastore/DatastoreAttributes.class" />
+    </jar>
+    <unzip src="${gae_dist}/lib/user/appengine-api-1.0-sdk-${gae_version}.jar" dest="${gae_dist}/lib/user/tmp"/>
+    <delete dir="${gae_dist}/lib/user/tmp/javax/mail"/>
+    <delete dir="${gae_dist}/lib/user/tmp/javax/activation"/>
+    <jar destfile="${gae_dist}/lib/user/appengine-api-1.0-sdk-${gae_version}.jar" basedir="${gae_dist}/lib/user/tmp" includes="**/*"/>
+    <delete dir="${gae_dist}/lib/user/tmp"/>
+  </target>
+
+  <target name="update-api-stubs-jar" depends="compile, repack-sdk">
+    <unjar src="${gae_dist}/lib/impl/appengine-api-stubs.jar" dest="${build}" overwrite="true">
+      <patternset>
+        <include name="META-INF/services/*" />
+      </patternset>
+    </unjar>
+    <jar destfile="${gae_dist}/lib/impl/appengine-api-stubs.jar" basedir="${build}" update="true">
+      <include name="apphosting/tools/*" />
+      <include name="com/google/appengine/api/users/dev/*" />
+      <include name="com/google/appengine/api/datastore/*" />
+      <include name="com/google/appengine/api/datastore/dev/*" />
+      <include name="com/google/appengine/api/memcache/dev/*" />
+      <include name="com/google/appengine/api/taskqueue/dev/*" />
+      <include name="com/google/appengine/api/blobstore/dev/*" />
+      <include name="com/google/appengine/api/xmpp/*" />
+      <include name="com/google/appengine/api/xmpp/dev/*" />
+      <include name="com/google/appengine/api/log/dev/*" />
+      <include name="com/google/appengine/api/channel/dev/*" />
+    </jar>
+  </target>
+ 
+  <target name="update-local-runtime-jar" depends="compile, repack-sdk">
+    <jar destfile="${gae_dist}/lib/impl/appengine-local-runtime.jar" basedir="${build}" update="true">
+      <include name="com/google/apphosting/utils/config/*" />
+      <include name="com/google/appengine/tools/development/*" />
+      <include name="com/google/appengine/tools/resources/*" />
+      <include name="org/mortbay/jetty/servlet/DatastoreSessionManager*" />
+    </jar>
+    <copy file="src/com/google/appengine/tools/development/webdefault.xml" tofile="${gae_dist}/com/google/appengine/tools/development/" />
+  </target>
+
+  <target name="update-remote-jar" depends="compile, repack-sdk, update-local-runtime-jar, update-tools-api-jar, update-api-stubs-jar, update-local-runtime-jar">
+    <jar destfile="${gae_dist}/lib/appengine-remote-api.jar" basedir="${build}" update="true">
+      <include name="com/google/appengine/tools/remoteapi/RemoteApiInstaller*" />
+    </jar>
+  </target>
+
+  <target name="update-tools-api-jar" depends="compile, repack-sdk">
+    <jar destfile="${gae_dist}/lib/appengine-tools-api.jar" basedir="${build}" update="true">
+      <include name="com/google/apphosting/utils/config/*" />
+      <include name="com/google/appengine/tools/development/ApiUtils*" />
+      <include name="com/google/appengine/tools/development/ApiProxyLocalFactory*" />
+      <include name="com/google/appengine/tools/development/ApiServer*" />
+      <include name="com/google/appengine/tools/development/ApiServerFactory*" />
+      <include name="com/google/appengine/tools/development/DevAppServerMain*" />
+      <include name="com/google/appengine/tools/development/DevAppServerFactory*" />
+      <include name="com/google/appengine/tools/development/SharedMain*" />
+    </jar>
+  </target>
+
+  <target name="update-agent-runtime-jar" depends="compile, repack-sdk">
+    <jar destfile="${gae_dist}/lib/impl/agent/appengine-agentruntime.jar" basedir="${build}" update="true">
+      <include name="com/google/appengine/tools/development/agent/runtime/*" />
+    </jar>
+  </target>
+
+  <target name="update-jars" depends="update-api-jar, update-agent-runtime-jar, update-api-stubs-jar, update-local-runtime-jar, update-tools-api-jar, update-remote-jar" />
+
+  <target name="install" depends="update-jars" />
+
+</project>

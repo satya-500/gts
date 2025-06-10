@@ -1,0 +1,43 @@
+<!-- FILE:templates/logs/main.html -->
+<!--Body content-->
+<div id="content" class="clearfix">
+    <div class="contentwrapper"><!--Content wrapper-->
+        {% set app_page_title="Log Viewer" %}
+        {% if standalone_app_page %}
+            <div class="page-header">
+                <h1>{{ app_page_title }}</h1>
+            </div><!--close header-->
+        {% endif %}
+        <div class="heading">
+
+            <div class="title">
+                <h2><span id="icon" class="glyphicon glyphicon-list-alt"></span><span id="title">Log Viewer</span></h2>
+            </div><!-- end title -->
+
+        </div><!-- End .heading-->
+
+        <!-- Build page from here: -->
+        <div class="row-fluid">
+          <div class="span3"></div><!--spacing div-->
+          <div class="span6">
+            <div class="page-header">
+              <h3>View logs for a service:</h3>
+            </div><!--close header-->
+            {% if is_user_cloud_admin %}
+            <ul style="list-style-type: none;">
+              <a href="/gather-logs" class="btn btn-success btn-large">Download All Logs</a>
+            </ul>
+            {% endif %}
+
+            {% if services %}
+              {% for service in services %}
+              <ul style="list-style-type: none;">
+                  <li><a class="btn btn-large" href="/logs/{{ service }}">{{ service }}</a></li>
+              </ul>
+              {% endfor %}
+            {% endif %}
+          </div><!--close span6 -->
+        <div class="span3"></div> <!--spacing div-->
+        </div> <!-- end row fluid -->
+    </div> <!-- end content wrapper -->
+</div> <!--end content-->

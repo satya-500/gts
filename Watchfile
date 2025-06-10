@@ -1,0 +1,27 @@
+watch('AppController/(.*).rb') { |md|
+  system "rake appcontroller:test"
+}
+
+watch('AppDashboard/(.*).py') { |md|
+  system "rake appdashboard:test"
+}
+
+watch('(AppDB)/(.*).py') { |md|
+  system "rake appdb:test"
+}
+
+watch('(AppManager)/(.*).py') { |md|
+  system "rake appmanager:test"
+}
+
+watch('InfrastructureManager/(.*).py') { |md|
+  system "rake infrastructuremanager:test"
+}
+
+watch('common/appscale/common/(.*).py') { |md|
+  system "rake common:test"
+}
+
+watch('XMPPReceiver/(.*).py') { |md|
+  system "rake xmppreceiver:test"
+}

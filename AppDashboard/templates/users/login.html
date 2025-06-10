@@ -1,0 +1,50 @@
+           <!-- FILE:templates/users/login.html -->
+
+<div class="container-fluid">
+        <div class="loginContainer">
+            <span class="form-horizontal"id="loginForm" >
+                <div class="form-row row-fluid">
+                  <div style="margin-top: 15px;">
+                  {% if flash_message %}
+                  <h3>
+                  <ul id="errorExplanation"><li class="flash error">
+                  {{ flash_message }}
+                  </li></ul>
+                  </h3>
+                  {% endif %}
+                  </div>
+                  <form action="/users/login" method="post">
+                  <div style="margin:0;padding:0;display:inline">
+                  {% if continue %}
+                  <input type="hidden" name="continue" value="{{ continue|e }}">
+                  {% endif %}
+                  </div>
+                  <p class="form-label span12">
+                    <label for="user_email">Email:</label>
+                    <input id="user_email" name="user_email" size="40" type="text" value="{{ user_email|default|e }}" />
+                  </p>
+                  <p class="form-label span12">
+                    <label for="user_password">Password:</label>
+                    <input id="user_password" name="user_password" size="40" type="password" />
+                  </p>
+                  <div style="margin: 5px 0 0 9px;" class="pull-left">
+                    <input class="btn btn-primary" name="commit" type="submit" value="Login" />
+                  </div>
+                  </form>
+                  <div style="clear: both"></div>
+                  <div style="margin: 15px 0 20px 9px">
+                    {% if show_create_account %}
+                        {% if continue %}
+                            <div>Don't have an account? <a href="/users/new?continue={{ continue|e }}">Create one.</a></div>
+                        {% else %}
+                            <div>Don't have an account? <a href="/users/new">Create one.</a></div>
+                        {% endif %}
+                    {% endif %}
+                    <div>View the current <a href="/status">Cloud Status.</a></div>
+                  </div>
+                </div>
+            </span>
+        </div>
+</div><!-- End .container-fluid -->
+
+  
