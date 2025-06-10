@@ -728,7 +728,7 @@ prepdashboard()
     rm -rf ${APPSCALE_HOME}/AppDashboard/vendor
     pip install -t ${APPSCALE_HOME}/AppDashboard/vendor wstools==0.4.3
     pip install -t ${APPSCALE_HOME}/AppDashboard/vendor SOAPpy
-    pip install -t ${APPSCALE_HOME}/AppDashboard/vendor python-crontab
+    pip install -t ${APPSCALE_HOME}/AppDashboard/vendor "python-crontab==2.4.2"
     pip install -t ${APPSCALE_HOME}/AppDashboard/vendor \
         ${APPSCALE_HOME}/AppControllerClient
 }
