@@ -31,6 +31,6 @@ echo "Installing appscale-common dependencies if any missing.."
 echo "Upgrading appscale-search2.."
 "${PIP}" install --no-deps "${SEARCH_DIR}"
 echo "Installing appscale-search2 dependencies if any missing.."
-"${PIP}" install "${SEARCH_DIR}"
+# "${PIP}" install "${SEARCH_DIR}"
 
 echo "appscale-search2 has been successfully installed."
