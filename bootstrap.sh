@@ -344,17 +344,17 @@ if [ -d /etc/appscale/certs ]; then
     fi
 fi
 
-echo -n "Building AppScale..."
-if ! (cd appscale/debian; bash appscale_build.sh) ; then
-    echo "failed!"
-    exit 1
-fi
-
-# echo -n "Installing AppScale Agents..."
-# if ! (cd appscale-agents/; make install-no-venv) ; then
-#     echo "Failed to install AppScale Agents"
+# echo -n "Building AppScale..."
+# if ! (cd appscale/debian; bash appscale_build.sh) ; then
+#     echo "failed!"
 #     exit 1
 # fi
+
+echo -n "Installing AppScale Agents..."
+if ! (cd appscale-agents/; make install-no-venv) ; then
+    echo "Failed to install AppScale Agents"
+    exit 1
+fi
 
 # echo -n "Building AppScale Tools..." 
 # if ! (cd appscale-tools/debian; bash appscale_build.sh) ; then
